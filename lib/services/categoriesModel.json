@@ -1,0 +1,63 @@
+{
+  "categories": [
+  {
+    "name": "milk choclate",
+    "subcategories": [
+      "Milk Chocolate Bars",
+      "Milk Chocolate Truffles",
+      "Milk Chocolate Truffles"
+    ]
+  },
+    {
+    "name":"dark chocolates",
+    "subcategories": [
+      "Dark Chocolate Bars",
+      "Dark Chocolate Truffles",
+      "Dark Chocolate Truffles"
+    ]},
+    {
+      "name": "white chocolates",
+      "subcategories": ["White Chocolate Bars",
+        "White Chocolate Truffles",
+        "White Chocolate Truffles"
+
+      ]
+    },
+    {
+      "name": "Chocolates Bars",
+      "subcategories": [
+        "chocolates bars"
+      ]
+    },
+    {
+      "name": "Chocolates candies",
+      "subcategories": [
+        "chocolates candies"
+      ]
+    },
+    {
+      "name": "drinks",
+      "subcategories": [
+        "chocolates drinks"
+      ]
+    },
+    {
+      "name": "hot chocolates",
+      "subcategories": [
+        "hot chocolates"
+      ]
+    },
+    {
+      "name": "branded",
+      "subcategories": [
+        "branded chocs"
+      ]
+    },
+    {
+      "name": "others",
+      "subcategories": [
+        "other chocolates"
+      ]
+    }
+]
+}
