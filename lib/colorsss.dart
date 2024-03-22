@@ -34,7 +34,7 @@ const categoriesList=[
 ];
 final sliderlist = ["asset/chocl.jpg", "asset/offer.png", "asset/banner.png"];
 
-String UserId=FirebaseAuth.instance.currentUser!.uid;
+// String UserId=FirebaseAuth.instance.currentUser!.uid;
 const categoriesImage=[
   "asset/milkChoc.png",
   "asset/darkChoco.png",
@@ -46,3 +46,140 @@ const categoriesImage=[
   "asset/chocbrand.png",
   "asset/custom.png",
 ];
+
+
+//
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:elite_events/buy/orderModelClass.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
+// import 'package:velocity_x/velocity_x.dart';
+//
+// import '../../buy/myOrder.dart';
+// import '../../colorsss.dart';
+//
+// class OrderConfirmationPage extends StatelessWidget {
+//   OrderConfirmationPage({
+//     required this.order,
+//   });
+//   final OrderBuy order;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return WillPopScope(
+//       onWillPop: () async {
+//         Navigator.pushReplacement(
+//             context,
+//             MaterialPageRoute(
+//               builder: (context) => myOrder(),
+//             ));
+//         return false;
+//       },
+//       child: Scaffold(
+//         appBar: AppBar(
+//           title: Text("Order Confirmation"),
+//         ),
+//         body: FutureBuilder(
+//             future: FirebaseFirestore.instance
+//                 .collection("Users")
+//                 .doc(FirebaseAuth.instance.currentUser!.uid)
+//                 .collection('orders')
+//                 .doc(order.orderId)
+//                 .get(),
+//             builder: (context, snapshot) {
+//               if(snapshot.connectionState==ConnectionState.waiting){
+//                 return Center(child: CircularProgressIndicator(),);
+//               }else if( !snapshot.hasData || !snapshot.data!.exists) {
+//                 return Center(child: Text("Order not found"));
+//               } else {
+//                 var orderdata=snapshot.data;
+//                 var addressdata=orderdata!['address'];
+//
+//                 return Padding(
+//                   padding: const EdgeInsets.all(16.0),
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       Text(
+//                         "Order Placed Successfully!",
+//                         style: TextStyle(
+//                           fontSize: 20,
+//                           fontWeight: FontWeight.bold,
+//                         ),
+//                       ),
+//                       SizedBox(height: 20),
+//                       ListTile(
+//                         leading: Image.network(order.itemImageUrl),
+//                         title: Text(order.itemName),
+//                         subtitle: Text("Quantity: ${order.quantity}"),
+//                       ),
+//                       SizedBox(height: 20),
+//                       Text(
+//                         "Order Details:",
+//                         style: TextStyle(
+//                           fontSize: 18,
+//                           fontWeight: FontWeight.bold,
+//                         ),
+//                       ),
+//                       SizedBox(height: 10),
+//                       customOrderDetailTile("Item Price", "\$${order.itemPrice}"),
+//                       customOrderDetailTile(
+//                           "Delivery Amount", "\$${order.deliveryAmount}"),
+//                       Divider(),
+//                       customOrderDetailTile("Total", "\$${order.totalAmount}"),
+//                       50.heightBox,
+//                       Text(
+//                         "Address Details  Details:",
+//                         style: TextStyle(
+//                           fontSize: 18,
+//                           fontWeight: FontWeight.bold,
+//                         ),
+//                       ),
+//                       customAddressDetailTile('Name', addressdata['Name'])
+//                     ],
+//                   ),
+//                 );
+//
+//               }
+//
+//             }),
+//       ),
+//     );
+//   }
+//
+//   Widget customOrderDetailTile(String leadingText, String trailingText) {
+//     return ListTile(
+//       title: Text(
+//         leadingText,
+//         style: TextStyle(
+//           fontSize: 16,
+//           fontWeight: FontWeight.bold,
+//         ),
+//       ),
+//       trailing: Text(
+//         trailingText,
+//         style: TextStyle(
+//           fontSize: 16,
+//         ),
+//       ),
+//     );
+//   }
+//
+//   Widget customAddressDetailTile(String leadingText, String trailingText) {
+//     return ListTile(
+//       title: Text(
+//         leadingText,
+//         style: TextStyle(
+//           fontSize: 16,
+//           fontWeight: FontWeight.bold,
+//         ),
+//       ),
+//       subtitle: Text(
+//         trailingText,
+//         style: TextStyle(
+//           fontSize: 16,
+//         ),
+//       ),
+//     );
+//   }
+// }

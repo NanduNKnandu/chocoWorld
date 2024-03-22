@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../buy/myOrder.dart';
@@ -110,25 +111,7 @@ class _profileeState extends State<profilee> {
                                   ],
                                 ),
                                 20.heightBox,
-                                // Row(
-                                //   children: [
-                                //     cartContainer(
-                                //         count: datas["cart_count"],
-                                //         titlee: "in your cart"),
-                                //     25.widthBox,
-                                //     cartContainer(
-                                //         count: datas["whishlist"],
-                                //         titlee: "whishlist"),
-                                //     25.widthBox,
-                                //     Expanded(
-                                //       child: SingleChildScrollView(
-                                //           child: cartContainer(
-                                //               count: datas['order_count'],
-                                //               titlee: "your order")),
-                                //     ),
-                                //     25.widthBox
-                                //   ],
-                                // ),
+
                                 20.heightBox,
 
                                 Padding(
@@ -140,7 +123,7 @@ class _profileeState extends State<profilee> {
                                         onPressed: () {
                                           Navigator.of(context)
                                               .push(MaterialPageRoute(
-                                            builder: (context) => AddressPage(),
+                                            builder: (context) => AddAddress(),
                                           ));
                                         },
                                         child: listProfile(
@@ -152,19 +135,8 @@ class _profileeState extends State<profilee> {
                                                   ),
                                             )),
                                       ),
-                                      Divider(
-                                        color: lightgrey,
-                                      ),
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context)
-                                                .push(MaterialPageRoute(
-                                              builder: (context) =>
-                                                  AdminTabPage(),
-                                            ));
-                                          },
-                                          child: listProfile(
-                                              leading: Icon(Icons.add))),
+
+
                                       Divider(
                                         color: lightgrey,
                                       ),
@@ -183,6 +155,15 @@ class _profileeState extends State<profilee> {
                                       Divider(
                                         color: lightgrey,
                                       ),
+                                      TextButton(
+                                          onPressed: () {
+ launch("tel://9876543210");
+                                          },
+                                          child: listProfile(
+                                              leading: Icon(Icons.headphones),
+                                          title: Text('Contact us')
+                                          )),
+                                      Divider(color: lightgrey,),
                                       TextButton(
                                           onPressed: () {
                                             SystemNavigator.pop();

@@ -29,25 +29,25 @@ class _AddressPageState extends State<AddressPage> {
     // TODO: implement initState
     super.initState();
   }
-   Future<void> checkExistingaddress()async{
+  Future<void> checkExistingaddress()async{
     try {
 
 
-     var snapshot = await FirebaseFirestore.instance
-         .collection("Users")
-         .doc(UserId)
-         .collection("Address")
-         .get();
+      var snapshot = await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("Address")
+          .get();
 
-     if(snapshot.docs.isNotEmpty){
-       var data=snapshot.docs.single.data();
-       fullNameController.text = data['Name'];
-       phoneNumberController.text = data['PhoneNumber'];
-       pincodeController.text = data['Pincode'];
-       stateController.text = data['state'];
-       cityController.text = data['city'];
-       houseNoController.text = data['houseNO'];
-     }
+      if(snapshot.docs.isNotEmpty){
+        var data=snapshot.docs.single.data();
+        fullNameController.text = data['Name'];
+        phoneNumberController.text = data['PhoneNumber'];
+        pincodeController.text = data['Pincode'];
+        stateController.text = data['state'];
+        cityController.text = data['city'];
+        houseNoController.text = data['houseNO'];
+      }
     } catch (err){
       print(err);
     }
@@ -111,7 +111,7 @@ class _AddressPageState extends State<AddressPage> {
     print('House No: $houseNo');
 
     if(fullName.isNotEmpty && phoneNumber.isNotEmpty && pincode.isNotEmpty && state.isNotEmpty &&city.isNotEmpty && houseNo.isNotEmpty){
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AddAddress()));
+      Navigator.pop(context);
 
     }
   }

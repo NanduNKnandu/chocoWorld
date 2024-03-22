@@ -32,31 +32,33 @@ class _itemDetailState extends State<itemDetail> {
   bool isInCart = false;
   bool Address = false;
 
-  CollectionReference cartItems = FirebaseFirestore.instance.collection('cart');
+  CollectionReference cartItems = FirebaseFirestore.instance
+      .collection('Users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection("cart");
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     checkCartStatus();
     checkUserAddress();
-
   }
-  void checkUserAddress() async{
-   String userId=FirebaseAuth.instance.currentUser!.uid;
-   CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
-   DocumentSnapshot userSnapshot = await usersCollection.doc(userId).get();
-   if(userSnapshot.exists && userSnapshot.data() != null){
-     bool userhasaddress=userSnapshot['Address'] !=null;
-     setState(() {
-       Address = userhasaddress;
-     });
-   } else {
-     setState(() {
-       Address=false;
-     });
-   }
 
-
+  void checkUserAddress() async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    CollectionReference usersCollection =
+        FirebaseFirestore.instance.collection('users');
+    DocumentSnapshot userSnapshot = await usersCollection.doc(userId).get();
+    if (userSnapshot.exists && userSnapshot.data() != null) {
+      bool userhasaddress = userSnapshot['Address'] != null;
+      setState(() {
+        Address = userhasaddress;
+      });
+    } else {
+      setState(() {
+        Address = false;
+      });
+    }
   }
 
   @override
@@ -75,12 +77,12 @@ class _itemDetailState extends State<itemDetail> {
                 IconButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => CartPage(
+                        builder: (context) =>  CartPage(
                           cartItems: [],
                         ),
                       ));
                     },
-                    icon: Icon(
+                    icon:  Icon(
                       CupertinoIcons.cart,
                       color: Colors.white,
                     )),
@@ -95,7 +97,7 @@ class _itemDetailState extends State<itemDetail> {
                     Align(
                       alignment: Alignment.topCenter,
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 100),
+                        padding:  EdgeInsets.only(top: 100),
                         child: Container(
                           color: lightgrey,
                           width: MediaQuery.of(context).size.width * 2 / 3,
@@ -108,7 +110,7 @@ class _itemDetailState extends State<itemDetail> {
                 ).box.make(),
                 20.heightBox,
                 Padding(
-                  padding: const EdgeInsets.only(left: 28.0, right: 20),
+                  padding:  EdgeInsets.only(left: 28.0, right: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -210,8 +212,11 @@ class _itemDetailState extends State<itemDetail> {
 
   Future<void> checkCartStatus() async {
     try {
-      var querySnapshot =
-          await cartItems.where("title", isEqualTo: widget.titile).get();
+      String userid = FirebaseAuth.instance.currentUser!.uid;
+      var querySnapshot = await cartItems
+          .where("userId", isEqualTo: userid)
+          .where("title", isEqualTo: widget.titile)
+          .get();
       setState(() {
         isInCart = querySnapshot.docs.isNotEmpty;
       });
@@ -221,7 +226,13 @@ class _itemDetailState extends State<itemDetail> {
   }
 
   Future<void> addtoCart() async {
-    await cartItems.add({
+    String userid = FirebaseAuth.instance.currentUser!.uid;
+
+    await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(userid)
+        .collection("cart")
+        .add({
       "userId": FirebaseAuth.instance.currentUser!.uid,
       "title": widget.titile,
       'imageUrl': widget.imageUrl,

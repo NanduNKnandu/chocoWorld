@@ -1,6 +1,8 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elite_events/buy/orderModelClass.dart';
 import 'package:flutter/material.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import '../../buy/myOrder.dart';
 
@@ -9,6 +11,7 @@ class OrderConfirmationPage extends StatelessWidget {
     required this.order,
   });
   final OrderBuy order;
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -47,10 +50,26 @@ class OrderConfirmationPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 10),
-              customOrderDetailTile("Item Price", "\$${order.itemPrice}"),
-              customOrderDetailTile("Delivery Amount", "\$${order.deliveryAmount}"),
+              customOrderDetailTile("Item Price", "\u20B9${order.itemPrice}"),
+              customOrderDetailTile("Delivery Amount", "\u20B9${order.deliveryAmount}"),
               Divider(),
-              customOrderDetailTile("Total", "\$${order.totalAmount}"),
+              customOrderDetailTile("Total", "\u20B9${order.totalAmount}"),
+              50.heightBox,
+              Text(
+                "Address Details  Details:",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+             Text(order.deliveryAddress!.name),
+              5.heightBox,
+              Text(order.deliveryAddress!.houseNo),5.heightBox,
+              Text(order.deliveryAddress!.pincode),5.heightBox,
+              Text(order.deliveryAddress!.city),5.heightBox,
+              Text(order.deliveryAddress!.state),5.heightBox,
+              Text(order.deliveryAddress!.phoneNumber),5.heightBox,
+
             ],
           ),
         ),
@@ -75,4 +94,7 @@ class OrderConfirmationPage extends StatelessWidget {
       ),
     );
   }
+
+
+ 
 }

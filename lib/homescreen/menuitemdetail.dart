@@ -100,12 +100,17 @@ class _menuitembuyState extends State<menuitembuy> {
                   ),
                 ),
                 20.heightBox,
-                SizedBox(
-                    width: MediaQuery.of(context).size.width - 20,
-                    child: Text(
-                      widget.description,
-                      style: TextStyle(color: CupertinoColors.black, fontSize: 15),
-                    )),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        widget.description,
+                        style: TextStyle(color: CupertinoColors.black, fontSize: 15),
+                      ),
+                    ),
+                  ),
+                ),
                 25.heightBox,
                 Container(
                   child: Row(

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elite_events/colorsss.dart';
 import 'package:elite_events/homescreen/category/item_detail.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,7 +24,7 @@ class _CartPageState extends State<CartPage> {
     super.initState();
     currentUserUid = FirebaseAuth.instance.currentUser!.uid;
     cartitemsShow = FirebaseFirestore.instance
-        .collection("cart")
+        .collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).collection('cart')
         .where("userId",
             isEqualTo: currentUserUid)
         .snapshots();
@@ -31,7 +32,7 @@ class _CartPageState extends State<CartPage> {
 
   Future<void> delete(var documentId) async {
     await FirebaseFirestore.instance
-        .collection('cart')
+        .collection('Users').doc(currentUserUid).collection('cart')
         .doc(documentId)
         .delete();
   }

@@ -14,12 +14,18 @@ class myOrder extends StatefulWidget {
 }
 
 class _myOrderState extends State<myOrder> {
+
+
+
+
+
   late Stream<QuerySnapshot> userOrders;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     userOrders = FirebaseFirestore.instance
         .collection('Users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -72,7 +78,17 @@ class _myOrderState extends State<myOrder> {
                                 child: Image(image: NetworkImage(order.itemImageUrl)))
                           ],
                         ),
-                        subtitle: Text('Total Amount: ${order.totalAmount ?? 'N/A'}'),
+                        subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Total Amount: ${order.totalAmount ?? 'N/A'}'),
+                            Row(
+                              children: [
+                                Text('Order Status: ',style: TextStyle(fontWeight: FontWeight.bold),),
+                                Text("${order.status ?? "n\a"},",style: TextStyle(fontWeight: FontWeight.w900,color: order.status=="Order Confirmed"? Colors.blue:order.status=="Shipped" ? Colors.green:Colors.red),)
+                              ],
+                            )
+                          ],
+                        ),
                       ), Divider()
                     ],
                   );

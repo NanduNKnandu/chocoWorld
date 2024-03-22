@@ -37,7 +37,7 @@ class _AddAddressState extends State<AddAddress> {
               child: Row(
                 children: [ Icon(Icons.edit),
                   Text(
-                    " Edit Address",
+                    " + Add New Addres",
                     style: TextStyle(
                         color: Colors.blueAccent, fontWeight: FontWeight.bold),
                   ),
@@ -70,27 +70,19 @@ class _AddAddressState extends State<AddAddress> {
                           return Column(
                             children: [
                               Container(
-                                height: 200,
+                                height: 150,
                                 width: MediaQuery.of(context).size.width,
                                 color: Colors.white,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                        MainAxisAlignment.end,
                                         children: [
-                                          // TextButton(
-                                          //   onPressed: () {},
-                                          //   child: Icon(
-                                          //     Icons.edit,
-                                          //     size: 20,
-                                          //     color: fontgrey,
-                                          //   ),
-                                          // ),
                                           15.widthBox,
                                           IconButton(
                                               onPressed: () {
@@ -109,21 +101,21 @@ class _AddAddressState extends State<AddAddress> {
                                                               FirebaseFirestore
                                                                   .instance
                                                                   .collection(
-                                                                      "Users")
+                                                                  "Users")
                                                                   .doc(FirebaseAuth
-                                                                      .instance
-                                                                      .currentUser!
-                                                                      .uid)
+                                                                  .instance
+                                                                  .currentUser!
+                                                                  .uid)
                                                                   .collection(
-                                                                      "Address")
+                                                                  "Address")
                                                                   .doc(address
-                                                                      .id)
+                                                                  .id)
                                                                   .delete();
                                                               Navigator.pop(
                                                                   context);
                                                             },
                                                             child:
-                                                                Text("Delete")),
+                                                            Text("Delete")),
                                                         Spacer(),
                                                         TextButton(
                                                             onPressed: () {
@@ -131,7 +123,7 @@ class _AddAddressState extends State<AddAddress> {
                                                                   context);
                                                             },
                                                             child:
-                                                                Text("Cancel")),
+                                                            Text("Cancel")),
                                                       ],
                                                     );
                                                   },
@@ -144,7 +136,7 @@ class _AddAddressState extends State<AddAddress> {
                                               ))
                                         ],
                                       ),
-                                      Text(address['Name']),
+                                      Text(address['Name'],style: TextStyle(fontWeight: FontWeight.bold),),
                                       Text(
                                           "${address["houseNO"]},${address['Pincode']},${address['city']},${address['state']}"),
                                       Text("${address["PhoneNumber"]}")
