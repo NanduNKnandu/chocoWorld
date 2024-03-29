@@ -19,7 +19,7 @@ class CategoriesPage extends StatelessWidget {
           var category = categoriesList[index];
           return Column(
             children: [
-              Container(
+              Card(
                 color: Vx.blue50,
                 child: ListTile(
                   title: Text(category,style: TextStyle(fontWeight: FontWeight.bold),),

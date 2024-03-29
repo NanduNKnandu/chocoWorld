@@ -51,7 +51,7 @@ class _EditPageState extends State<EditPage> {
               onPressed: () {
                 updateDetails();
               },
-              child: Text('Update'),
+              child: Text('Update',style: TextStyle(color: Colors.black)),
             ),
           ],
         ),

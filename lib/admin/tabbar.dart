@@ -3,7 +3,6 @@ import 'package:elite_events/allExtract.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'adminSlider.dart';
 import 'adminbooking.dart';
 import 'adminCategory.dart';
 import 'menuITems.dart';
@@ -22,7 +21,7 @@ class _AdminTabPageState extends State<AdminTabPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -43,7 +42,7 @@ class _AdminTabPageState extends State<AdminTabPage>
               Tab(text: 'Order'),
               Tab(text: 'categories'),
               Tab(text: 'menuitems'),
-              Tab(text: 'Slider'),
+
             ],
           ),
         ),drawer: Drawer(child: ListView(
@@ -66,7 +65,7 @@ class _AdminTabPageState extends State<AdminTabPage>
             AllOrdersPage(),
             CategoriesPage(),
             menuItms(),
-            AdminPage(),
+
           ],
         ),
       ),

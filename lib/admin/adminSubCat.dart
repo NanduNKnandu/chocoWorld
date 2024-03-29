@@ -1,8 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:elite_events/admin/subcatedit.dart';
-import 'package:elite_events/colorsss.dart';
 import 'package:flutter/material.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:elite_events/admin/subcatedit.dart';
 
 class SubcategoriesPage extends StatelessWidget {
   final String categoryId;
@@ -25,100 +24,90 @@ class SubcategoriesPage extends StatelessWidget {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           }
 
           if (snapshot.hasError) {
-            return Text("Error: ${snapshot.error}");
+            return Center(child: Text("Error: ${snapshot.error}"));
           }
 
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return Text("No subcategories found.");
+            return Center(child: Text("No subcategories found."));
           }
 
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               var subcategory = snapshot.data!.docs[index];
-              return Column(
-                children: [
-                  Container(
-                    color: Vx.blue50,
-                    child: ListTile(
-                      title: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              subcategory['name'],
-                              style: TextStyle(
-                                  color: Colors.blueAccent,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Spacer(),
-                          IconButton(
-                            icon: Icon(Icons.edit),
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => EditPage(
-                                  categoryId: categoryId,
-                                  subcategoryId: subcategory.id,
-                                ),
-                              ));
-                            },
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.delete),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text("Confirm Deletion"),
-                                    content: Text(
-                                        "Are you sure you want to delete this subcategory?"),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Text("Cancel"),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          FirebaseFirestore.instance
-                                              .collection("items")
-                                              .doc(subcategory.id)
-                                              .delete();
-                                          Navigator.of(context).pop();
-                                          print("delete success");
-                                        },
-                                        child: Text("Delete"),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            subcategory['price'],
-                            style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: ListTile(
+                    title: Text(
+                      subcategory['name'],
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      'Price: ${subcategory['price']}',
+                      style: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),
+                    ),
+                    leading: SizedBox(
+                      width: 80,
+                      height: 80,
+                      child: CachedNetworkImage(imageUrl: subcategory['image']),
+                    ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => EditPage(
+                                categoryId: categoryId,
+                                subcategoryId: subcategory.id,
+                              ),
+                            ));
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Confirm Deletion"),
+                                  content: Text("Are you sure you want to delete this subcategory?"),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text("Cancel"),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        FirebaseFirestore.instance.collection("items").doc(subcategory.id).delete();
+                                        Navigator.of(context).pop();
+                                        print("delete success");
+                                      },
+                                      child: Text("Delete"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ),
-                  20.heightBox
-                ],
+                ),
               );
             },
           );

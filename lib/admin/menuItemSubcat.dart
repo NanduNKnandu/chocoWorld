@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elite_events/admin/subcatedit.dart';
 import 'package:flutter/material.dart';
@@ -40,17 +41,23 @@ class menuItemSubcat extends StatelessWidget {
               var subcategory = snapshot.data!.docs[index];
               return Column(
                 children: [
-                  Container(
+                  Card(
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
                     color: Vx.blue50,
                     child: ListTile(
                       title: Row(
-                        mainAxisSize: MainAxisSize.min,
                         children: [
+                          SizedBox(height: 80,
+                              width: 80,
+                              child: CachedNetworkImage(imageUrl: subcategory['image'])),
                           Expanded(
                             child: Text(
-                              subcategory['name'],
+                              subcategory['name'], overflow: TextOverflow.ellipsis,maxLines: 5,
                               style: TextStyle(
-                                  color: Colors.blueAccent,
+                            
                                   fontWeight: FontWeight.bold),
                             ),
                           ),

@@ -167,8 +167,7 @@ class _profileeState extends State<profilee> {
                                       TextButton(
                                           onPressed: () {
 
-                                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => AdminTabPage(),));
-                                            // SystemNavigator.pop();
+                                            SystemNavigator.pop();
                                           },
                                           child: listProfile(
                                               leading: Icon(
