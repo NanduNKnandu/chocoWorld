@@ -38,6 +38,7 @@ class _EditPageState extends State<EditPage> {
             ),
             16.heightBox,
             buildTextField(hint: "price",
+              keyboardType: TextInputType.number,
               controller: pricecontroller, colors: fontgrey,
             ),
             16.heightBox,

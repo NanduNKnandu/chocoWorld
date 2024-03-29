@@ -173,6 +173,7 @@ class _adminState extends State<admin> {
                 ),
                 16.heightBox,
                 buildTextField(
+                  keyboardType: TextInputType.number,
                   showborder: true,
                   controller: itemPriceController,
                   hint: 'item price',
