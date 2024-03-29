@@ -1,3 +1,4 @@
+import 'package:elite_events/admin/randomtry.dart';
 import 'package:elite_events/allExtract.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -62,7 +63,7 @@ class _AdminTabPageState extends State<AdminTabPage>
         body: TabBarView(
           controller: _tabController,
           children: [
-            adminbooking(),
+            AllOrdersPage(),
             CategoriesPage(),
             menuItms(),
             AdminPage(),

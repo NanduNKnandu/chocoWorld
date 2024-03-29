@@ -177,6 +177,7 @@ class _changeADdressState extends State<changeADdress> {
                           'itemPrice': widget.order.itemPrice,
                           'deliveryAmount': widget.order.deliveryAmount,
                           'totalAmount': widget.order.totalAmount,
+                          'status' : 'Order Confirmed',
                           'address': {
                             'Name': selectedAddress['Name'],
                             'PhoneNumber': selectedAddress['PhoneNumber'],
@@ -187,7 +188,7 @@ class _changeADdressState extends State<changeADdress> {
                           },
                         });
 
-                        // Navigate to order confirmation page
+
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => OrderConfirmationPage(
                             order: OrderBuy(

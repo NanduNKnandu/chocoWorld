@@ -6,9 +6,8 @@ import 'myOrder.dart';
 import 'orderModelClass.dart';
 
 class OrderDetailsPage extends StatelessWidget {
-  final OrderBuy order;
-
   const OrderDetailsPage({required this.order, Key? key}) : super(key: key);
+  final OrderBuy order;
 
   @override
   Widget build(BuildContext context) {
@@ -18,47 +17,96 @@ class OrderDetailsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Order Details'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection("Users")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection("orders")
+            .doc(order.orderId)
+            .snapshots(),
+        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          }
+
+          var data = snapshot.data!.data() as Map<String, dynamic>;
+
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        'Item Name: ${order.itemName ?? 'N/A'}',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
+                        'Item Details',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                       ),
                     ),
-                    SizedBox(
-                      height: 70,
-                      width: 70,
-                      child: Image.network(order.itemImageUrl ?? ''),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Item Name: ${data['itemName'] ?? 'N/A'}',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 70,
+                          width: 70,
+                          child: Image.network(data['itemImageUrl'] ?? ''),
+                        ),
+                        100.heightBox,
+                      ],
                     ),
-                    200.heightBox,
+                    Text('Quantity: ${data['quantity']}'),
+                    Text('Delivery Amount: ${data['deliveryAmount']}'),
+                    Text('Total Amount: ${data['totalAmount'] ?? 'N/A'}'),
+                    70.heightBox,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Delivery Address',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                    ),
+                    Text('${data['address']['Name']}'),
+                    Row(
+                      children: [
+                        Text('${data['address']['houseNO']},'),
+                        Text('${data['address']['Pincode']}'),
+                      ],
+                    ),
+                    Text('${data['address']['city']}'),
+                    Text('${data['address']['state']}'),
+                    Text('${data['address']['PhoneNumber']}'),
+                    50.heightBox,
                   ],
-                ),
-                Text('Quantity: ${order.quantity}'),
-                Text('Delivery Amount: ${order.deliveryAmount}'),
-                Text('Total Amount: ${order.totalAmount ?? 'N/A'}'),
-                50.heightBox,
+                ).box.blue50.rounded.shadow.make(),
+                200.heightBox,
+                if (canCancelOrder)
+                  TextButton(
+                    onPressed: () {
+                      _showCancelConfirmationDialog(context);
+                    },
+                    child: Text("Cancel This Order"),
+                  ).box.roundedFull.blue50.make()
               ],
-            ).box.blue50.rounded.shadow.make(),
-            200.heightBox,
-            if (canCancelOrder)
-              TextButton(
-                onPressed: () {
-                  _showCancelConfirmationDialog(context);
-                },
-                child: Text("Cancel This Order"),
-              ).box.roundedFull.blue50.make()
-          ],
-        ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -71,12 +119,12 @@ class OrderDetailsPage extends StatelessWidget {
           title: Text('Cancel Order'),
           content: SingleChildScrollView(
             child: ListBody(
-              children:[
+              children: [
                 Text('Are you sure you want to cancel this order?'),
               ],
             ),
           ),
-          actions:[
+          actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
@@ -86,6 +134,7 @@ class OrderDetailsPage extends StatelessWidget {
             TextButton(
               onPressed: () {
                 cancelOrder(context);
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => myOrder(),));
               },
               child: Text('Yes, Cancel Order'),
             ),
@@ -108,7 +157,5 @@ class OrderDetailsPage extends StatelessWidget {
         duration: Duration(seconds: 2),
       ),
     );
-
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => myOrder(),));
   }
 }

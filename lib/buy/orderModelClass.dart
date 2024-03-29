@@ -7,7 +7,7 @@ class OrderBuy {
   final double deliveryAmount;
   final double totalAmount;
   final String status;
-  final Address? deliveryAddress; 
+  final Address? deliveryAddress;
 
   OrderBuy({
     required this.orderId,
@@ -57,12 +57,12 @@ class Address {
 
   factory Address.fromMap(Map<String, dynamic> map) {
     return Address(
-      name: map['name'],
-      phoneNumber: map['phoneNumber'],
+      name: map['Name'],
+      phoneNumber: map['PhoneNumber'],
       houseNo: map['houseNo'],
       city: map['city'],
       state: map['state'],
-      pincode: map['pincode'],
+      pincode: map['Pincode'],
     );
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elite_events/buy/orderModelClass.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +13,15 @@ class OrderConfirmationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return WillPopScope(
-      onWillPop: () async{
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => myOrder(),));
+      onWillPop: () async {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => myOrder(
+                 ),
+            ));
         return false;
       },
       child: Scaffold(
@@ -51,7 +56,8 @@ class OrderConfirmationPage extends StatelessWidget {
               ),
               SizedBox(height: 10),
               customOrderDetailTile("Item Price", "\u20B9${order.itemPrice}"),
-              customOrderDetailTile("Delivery Amount", "\u20B9${order.deliveryAmount}"),
+              customOrderDetailTile(
+                  "Delivery Amount", "\u20B9${order.deliveryAmount}"),
               Divider(),
               customOrderDetailTile("Total", "\u20B9${order.totalAmount}"),
               50.heightBox,
@@ -62,14 +68,18 @@ class OrderConfirmationPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-             Text(order.deliveryAddress!.name),
+              Text(order.deliveryAddress!.name),
               5.heightBox,
-              Text(order.deliveryAddress!.houseNo),5.heightBox,
-              Text(order.deliveryAddress!.pincode),5.heightBox,
-              Text(order.deliveryAddress!.city),5.heightBox,
-              Text(order.deliveryAddress!.state),5.heightBox,
-              Text(order.deliveryAddress!.phoneNumber),5.heightBox,
-
+              Text(order.deliveryAddress!.houseNo),
+              5.heightBox,
+              Text(order.deliveryAddress!.pincode),
+              5.heightBox,
+              Text(order.deliveryAddress!.city),
+              5.heightBox,
+              Text(order.deliveryAddress!.state),
+              5.heightBox,
+              Text(order.deliveryAddress!.phoneNumber),
+              5.heightBox,
             ],
           ),
         ),
@@ -94,7 +104,4 @@ class OrderConfirmationPage extends StatelessWidget {
       ),
     );
   }
-
-
- 
 }
